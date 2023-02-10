@@ -48,21 +48,21 @@ uint8_t DHT11_CheckResponse() {
 		if(HAL_GPIO_ReadPin(dht11_GPIO_Port, dht11_Pin)) Response = 1;
 		else Response = 0;
 	}
-	checkPinWithTimeoutUs(200, HAL_GPIO_ReadPin(dht11_GPIO_Port, dht11_Pin));
+	while(HAL_GPIO_ReadPin(dht11_GPIO_Port, dht11_Pin));
 	return Response;
 }
 
 uint8_t DHT11_Read() {
 	uint8_t i, j;
 	for(j = 0; j < 8; j++) {
-		checkPinWithTimeoutUs(200, !HAL_GPIO_ReadPin(dht11_GPIO_Port, dht11_Pin));
+		while(!HAL_GPIO_ReadPin(dht11_GPIO_Port, dht11_Pin));
 		DelayUs(40);
 		if(!HAL_GPIO_ReadPin(dht11_GPIO_Port, dht11_Pin)) {
 			i &= ~(1 << (7 - j));
 		}
 		else
 			i |= (1 << (7 - j));
-		checkPinWithTimeoutUs(200, HAL_GPIO_ReadPin(dht11_GPIO_Port, dht11_Pin));
+		while(HAL_GPIO_ReadPin(dht11_GPIO_Port, dht11_Pin));
 	}
 	return i;
 }

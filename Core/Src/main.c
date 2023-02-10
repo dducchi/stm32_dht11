@@ -106,13 +106,13 @@ HAL_TIM_Base_Start(&htim1);
 	  DHT11_Start();// 초기화
 	  DHT11_CheckResponse();
 	  uint8_t data[5];
-	  for(int i = 1; i < 5; i++)//5바이트 첨가
+	  for(int i = 0; i < 5; i++)//5바이트 첨가
 		  data[i] = DHT11_Read();
 	  // 5개 바이트
 	  //[습도 상위][습도 하위][온도 상위][온도 하위][check sum :sum]
 	  // 위치 계산
-	  printf("T = %d H = %d\n", data[0], data[1]);
-	  HAL_Delay(3000);
+	  printf("%d.%d %d.%d\n", data[0], data[1], data[2],data[3]);
+	  HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
